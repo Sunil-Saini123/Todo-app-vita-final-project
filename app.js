@@ -33,18 +33,21 @@ app.use("/", require("./routes/todos"));
 // Start server after successful DB connection
 async function startServer() {
   try {
+    console.log("⏳ Attempting to connect to MongoDB...");
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB connected");
+    console.log("✅ MongoDB connected");
 
     const PORT = process.env.PORT || 8080;
+    console.log(`🚀 Starting server on port ${PORT}...`);
     
     app.listen(PORT, () => {
-      console.log(`Server started on port ${PORT}`);
+      console.log(`✅ Server started and listening on port ${PORT}`);
     });
   } catch (err) {
-    console.error("Failed to connect to MongoDB:", err.message);
-    process.exit(1); // Exit container so Cloud Run knows it's broken
+    console.error("❌ Failed to connect to MongoDB:", err.message);
+    process.exit(1);
   }
 }
+
 
 startServer();
