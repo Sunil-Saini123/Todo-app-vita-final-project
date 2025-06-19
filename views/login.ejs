@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - ToDo App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/login.css">
+  </head>
+  <body>
+    <div class="floating-shapes">
+      <i class="fas fa-tasks shape" style="font-size: 4rem"></i>
+      <i class="fas fa-check-circle shape" style="font-size: 3rem"></i>
+      <i class="fas fa-clipboard-list shape" style="font-size: 3.5rem"></i>
+    </div>
+
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <h1>Welcome Back</h1>
+          <p>Sign in to your account</p>
+        </div>
+
+        <% if (error) { %>
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <%= error %>
+        </div>
+        <% } %>
+
+        <form action="/login" method="POST" novalidate>
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <div class="position-relative">
+              <i class="fas fa-envelope input-icon"></i>
+              <input
+                name="email"
+                id="email"
+                class="form-control <%= error ? 'is-invalid' : '' %>"
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <% if (error) { %>
+            <div class="invalid-feedback">
+              <i class="fas fa-exclamation-circle me-1"></i>
+              Enter a valid email address.
+            </div>
+            <% } %>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="position-relative">
+              <i class="fas fa-lock input-icon"></i>
+              <input
+                name="password"
+                id="password"
+                class="form-control <%= error ? 'is-invalid' : '' %>"
+                type="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <% if (error) { %>
+            <div class="invalid-feedback">
+              <i class="fas fa-exclamation-circle me-1"></i>
+              Enter your password.
+            </div>
+            <% } %>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt me-2"></i>
+            Sign In
+          </button>
+        </form>
+
+        <div class="register-link">
+          <p>Don't have an account?</p>
+          <a href="/register" class="btn btn-link">
+            <i class="fas fa-user-plus me-2"></i>
+            Create Account
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
