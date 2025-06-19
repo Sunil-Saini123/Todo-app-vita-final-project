@@ -10,7 +10,6 @@ const initPassport = require('./config/passport');
 initPassport(passport);
 
 const app = express();
-mongoose.connect(process.env.MONGO_URI);
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
@@ -29,8 +28,20 @@ app.use(passport.session());
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/todos'));
 
-const PORT = process.env.PORT || 8080;
+// Start server after successful DB connection
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB connected');
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to connect to MongoDB:', err.message);
+    process.exit(1); // Exit container so Cloud Run knows it's broken
+  }
+}
+
+startServer();
